@@ -1,36 +1,10 @@
 // See the Electron documentation for details on how to use preload scripts:
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 // In the preload script.
+import { contextBridge, ipcRenderer } from 'electron';
 
-// import { ipcRenderer } from 'electron';
+contextBridge.exposeInMainWorld('electronAPI', {
+    takeScreenshot: (screenshot: string) => ipcRenderer.invoke('takeScreenshot', screenshot),
+    takePhoto: (photo: string) => ipcRenderer.invoke('takePhoto', photo)
 
-// ipcRenderer.on('SET_SOURCE', async (event, sourceId) => {
-//   try {
-//     const stream = await navigator.mediaDevices.getUserMedia({
-//       audio: false,
-//       video: {
-//         mandatory: {
-//           chromeMediaSource: 'desktop',
-//           chromeMediaSourceId: sourceId,
-//           minWidth: 1280,
-//           maxWidth: 1280,
-//           minHeight: 720,
-//           maxHeight: 720
-//         }
-//       }
-//     })
-//     handleStream(stream)
-//   } catch (e) {
-//     handleError(e)
-//   }
-// })
-
-// function handleStream (stream) {
-//   const video = document.querySelector('video')
-//   video.srcObject = stream
-//   video.onloadedmetadata = (e) => video.play()
-// }
-
-// function handleError (e) {
-//   console.log(e)
-// }
+})

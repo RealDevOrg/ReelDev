@@ -2,6 +2,10 @@
 // import React from 'react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  Button,
+  TextField
+} from '@mui/material';
 
 // user/signup (username, password) -> backend attachs cookie
 
@@ -45,21 +49,21 @@ const SignUp = () => {
     }
 
     return (
-        <div>
-            <h1>Howdy, create your profile!</h1>
-            <form>
-                <input type="text"placeholder="Username"
-                name="username" value={username} onChange={event => onChange(event)}>
-                </input>
-                <br/>
-                <input type="text"placeholder="Password"
-                name="password" value={password} onChange={event => onChange(event)}>
-                </input>
-                <br/>
-                <input type="submit" className='loginBttn' onClick={() => onClick()} ></input>
-              
-            </form>
-        </div>
+        <div className='container'>
+        <h1>Howdy, create your profile!</h1>
+        <form>
+            <TextField type="text"placeholder="Username"
+            name="username" value={username} onChange={event => onChange(event)}>
+            </TextField>
+            <TextField type="text"placeholder="Password"
+            name="password" value={password} onChange={event => onChange(event)}>
+            </TextField>
+            <br/>
+            <Button variant='contained' type='submit' className='bttn' onClick={() => onClick()} >Create!</Button>
+        </form>
+        <br/>
+        <Button variant='outlined' className='bttn' onClick={()=>takeMeHome()}>Go to login page</Button>
+    </div>
     )
 }
 

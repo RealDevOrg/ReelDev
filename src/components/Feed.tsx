@@ -10,6 +10,10 @@
  */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  Button,
+  TextField
+} from '@mui/material';
 import Post from './Post';
 
 const Feed = () => {
@@ -24,12 +28,12 @@ const Feed = () => {
   }
   
   return (
-    <div>
-      <button onClick={() => takeMeHome()}>Go To Landing Page</button>
+    <div className='container'>
+      <Button variant='outlined' onClick={() => takeMeHome()}>Go To Landing Page</Button>
       <h2>Feed Here!</h2>
       <Post />
       <br/>
-      <button onClick={() => openCamera()}>CREATE A POST</button>
+      <Button variant='outlined' onClick={() => openCamera()}>CREATE A POST</Button>
     </div>
   )
 };
