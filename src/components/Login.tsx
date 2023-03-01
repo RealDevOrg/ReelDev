@@ -38,7 +38,7 @@ const loginPage = () => {
       <h2>Let's log you in cutie 😉</h2>
       <form>
         <TextField type='text' placeholder='Username' name='username'/>
-        <TextField type='text' placeholder='Password' name='password'/> 
+        <TextField type='password' placeholder='Password' name='password'/> 
         <br/>
         <Button variant='outlined' type='submit' className='loginBttn' onClick={() => goToFeed()}>
           Login
