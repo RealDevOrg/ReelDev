@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, RequestHandler } from "express";
 import bcrypt from 'bcrypt';
 
-const db = require('../database.ts');
+const db = require('../database/database.ts');
 
 interface MiddlewareArgs {
   req: Request, 
@@ -52,8 +52,8 @@ const authController: AuthController = {
     const { username, password } = req.body;
     try {
       const queryUser = `
-      SELECT _id, password FROM users 
-      WHERE username=$1;
+        SELECT _id, password FROM users 
+        WHERE username=$1;
       `
       const values = [username];
       const response = await db.query(queryUser, values);
@@ -80,9 +80,9 @@ const authController: AuthController = {
       console.log('setting SSID cookie');
       res.cookie('SSID', res.locals.userID, { httpOnly: true });
       return next();
-    } catch (e) {
+    } catch (err) {
       return next({
-        log: `Middleware error in authController.setSSIDCookie: ${e}`,
+        log: `Middleware error in authController.setSSIDCookie: ${err}`,
         status: 400
       });
     }
@@ -90,10 +90,41 @@ const authController: AuthController = {
 
   verifySSIDCookie: (req: Request, res: Response, next: NextFunction) => {
     // TODO:
+    const { SSID } = req.cookies;
+    try {
+      console.log('setting SSID cookie');
+      if (!SSID) throw new Error("you didn't have the cookie");
+      return next();
+    } catch (err) {
+      return next({
+        log: `Middleware error in authController.setSSIDCookie: ${err}`,
+        status: 401,
+      });
+    }
   },
 
-  setHasPostedCookie: (req: Request, res: Response, next: NextFunction) => {
+  setHasPostedCookie: async (req: Request, res: Response, next: NextFunction) => {
     // TODO:
+    const { SSID } = req.cookies;
+    try {
+      const hasUserPosted = `
+        SELECT has_posted_today FROM users 
+        WHERE username=$1;
+      `
+      const userID = SSID;
+      const responseData = await db.query(hasUserPosted, userID);
+      console.log("logging has posted today response", responseData.rows[0])
+      const hasPosted = responseData.rows[0].has_posted_today;
+      if (!hasPosted) throw new Error(`couldn't find user ${userID} in database`)
+      res.cookie('hasPosted', hasPosted, { httpOnly: true });
+      return next();
+    } catch (err) {
+      return next({
+        log: `Middleware error in authController.setHasPostedCookie: ${err}`,
+        status: 400
+      })
+    }
+
   },
 
   verifyHasPostedCookie: (req: Request, res: Response, next: NextFunction) => {
