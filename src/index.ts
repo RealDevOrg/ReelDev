@@ -22,17 +22,41 @@ const takeScreenshot = (e, screenshot) => {
     })
     .catch(error => console.log(error));
 };
+
 //take photo function
-const takePhoto = async (e, photo) => {
-  //open user camera
-  navigator.mediaDevices.getUserMedia({video: true})
+const takePhoto =  () => {
+  // Access user's camera -> navigator isn't working right now - error is thrown that navigator cannot be accessed
+  navigator.mediaDevices.getUserMedia({ video: true })
     .then((stream) => {
-      mainWindow.webContents.executeJavaScript(`
-        document.getElementById('photo-image').src  = "${stream}"
-      `)
+      const video = document.createElement('video') //do we need to create a new element or can we access an existing one?
+      video.srcObject = stream
+      video.play()
+
+      // Create canvas to take photo
+      const canvas = document.createElement('canvas') 
+      canvas.width = video.videoWidth
+      canvas.height = video.videoHeight
+
+      // Draw video frame on canvas
+      const context = canvas.getContext('2d')
+      context.drawImage(video, 0, 0, canvas.width, canvas.height)
+
+      // Get photo as data URL
+      const dataUrl = canvas.toDataURL('')
+
+      // Do something with the photo dataUrl
+      console.log(dataUrl)
+
+      // Stop video stream
+      stream.getTracks().forEach((track) => {
+        track.stop()
+      })
     })
-    .catch(error => console.log(error)); 
+    .catch((err) => {
+      console.error(err)
+    })
 };
+
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -46,6 +70,7 @@ const createWindow = (): void => {
     width: 800,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      // nodeIntegration: true
     },
   })
   ipcMain.handle('takeScreenshot', takeScreenshot);

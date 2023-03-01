@@ -32,13 +32,14 @@ const Camera = () => {
             <img id='screenshot-image' src=''></img>
         </div>
         <div className="photo" style={{display: 'flex', width: '500px', }}>
-            <canvas id='preview'></canvas>
+            <video id='preview' src=''></video>
             <img id='photo-image' src=''></img>
         </div>
         <br/>
         <span></span>
           <Button variant='contained' onClick={(e) => snap(e)}>Snap</Button>
           <Button variant='contained' onClick={() => send()}>Post</Button>
+          
     </div>
   );
 }
