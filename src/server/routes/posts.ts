@@ -1,4 +1,6 @@
 import express from 'express';
+const feedController = require('../controllers/feedController');
+const authController = require('../controllers/authController');
 const router = express.Router();
 
 

@@ -1,10 +1,15 @@
 import express from 'express';
-
 import { Request, Response, NextFunction,  } from 'express';
+const cookieParser = require('cookie-parser');
+
 const app = express();
 
 // declare port Number
 const PORT = 3000;
+
+app.use(express.json());
+app.use(cookieParser());
+
 //
 const userRouter = require('./routes/users');
 const postRouter = require('./routes/posts');
@@ -22,7 +27,7 @@ app.use((req, res) => res.sendStatus(404));
 app.use((err: any, req: Request, res: Response, next: NextFunction): Response => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
-    status: 400,
+    status: 500,
     message: { err: 'An error occured' }
   };
 
