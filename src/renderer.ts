@@ -28,5 +28,13 @@
 
 import './index.css';
 import './App'
+import { desktopCapturer } from 'electron';
 
 console.log('👋 This message is being logged by "renderer.js", included via webpack');
+
+function captureScreen() {
+  desktopCapturer.getSources({ types: ['screen'] })
+          .then( sources => {
+              document.getElementById('screenshot-image').src = sources[0].thumbnail.toDataURL() // The image to display the screenshot
+          })
+        }

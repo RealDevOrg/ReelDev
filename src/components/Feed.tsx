@@ -10,6 +10,7 @@
  */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Post from './Post';
 
 const Feed = () => {
     
@@ -25,9 +26,9 @@ const Feed = () => {
   return (
     <div>
       <button onClick={() => takeMeHome()}>Go To Landing Page</button>
-      <h1>Feed Here!</h1>
-      <p>Imagine some photos</p>
-      
+      <h2>Feed Here!</h2>
+      <Post />
+      <br/>
       <button onClick={() => openCamera()}>CREATE A POST</button>
     </div>
   )

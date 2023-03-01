@@ -17,7 +17,7 @@ const loginPage = () => {
 
   return (
     <div className='loginWindow'>
-      <h1>Let's log you in cutie</h1>
+      <h2>Let's log you in cutie 😉</h2>
       <form>
         <input type='text' placeholder='Username' name='username'/>
         <br/>
@@ -28,7 +28,7 @@ const loginPage = () => {
         </button>
       </form>
       <br/>
-      <h3>Don't have an account?</h3>
+      <h4> 🫢 Yikes! Don't have an account?!</h4>
       <button className='signUpBttn' onClick={() => goToSignUp()}>Sign up!</button>
     </div>
   );
