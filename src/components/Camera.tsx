@@ -18,12 +18,12 @@ const Camera = () => {
     }
     const snap = (e) => {
         console.log('snap function is fired');
-        // window.electronAPI.takePhoto(e);
-        console.log(e);
+        window.electronAPI.takePhoto();
         window.electronAPI.takeScreenshot();
     }
-    
-  
+    const send = () => {
+      console.log('send function invoked')
+    }
   return (
     <div className="Camera">
         <Button id='test' variant='outlined' onClick={()=>takeMeHome()}>Take me home</Button>
@@ -32,12 +32,13 @@ const Camera = () => {
             <img id='screenshot-image' src=''></img>
         </div>
         <div className="photo" style={{display: 'flex', width: '500px', }}>
+            <canvas id='preview'></canvas>
             <img id='photo-image' src=''></img>
         </div>
         <br/>
         <span></span>
           <Button variant='contained' onClick={(e) => snap(e)}>Snap</Button>
-          <Button variant='contained' onClick={(e) => snap(e)}>Post</Button>
+          <Button variant='contained' onClick={() => send()}>Post</Button>
     </div>
   );
 }
