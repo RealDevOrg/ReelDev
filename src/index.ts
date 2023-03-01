@@ -5,7 +5,16 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
-const takePhoto = async () => {
+// index.ts 
+  // add functions
+  // add ipcMain.handle() for each function
+
+// preload.ts
+  // add function to exposeInMainWorld
+
+// frontend
+  // access functionality with window.electronAPI.yourFunctionHere()
+const takePhoto = async (e, photo) => {
   return 'say cheeeeeeese';
 }
 
