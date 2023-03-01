@@ -27,5 +27,7 @@
  */
 
 import './index.css';
+import './App'
+// import { desktopCapturer } from 'electron';
 
 console.log('👋 This message is being logged by "renderer.js", included via webpack');

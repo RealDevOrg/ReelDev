@@ -1,0 +1,1 @@
+//the pop-up notification that you need to create a post -> no functionality here? just a button to send to camera 
