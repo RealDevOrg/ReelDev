@@ -9,7 +9,7 @@ let mainWindow;
 //take screenshot function
 const takeScreenshot = (e, screenshot) => {
   console.log('takeScreenshot invoked');
-  desktopCapturer.getSources({types: ['screen'], thumbnailSize: {width: 1080, height: 820}})
+  desktopCapturer.getSources({types: ['screen'], thumbnailSize: {width: 500, height: 300}})
     .then(sources => {
       console.log('snip snap');
       const image = sources[0].thumbnail.toDataURL();
@@ -25,36 +25,37 @@ const takeScreenshot = (e, screenshot) => {
 
 //take photo function
 const takePhoto =  () => {
+  console.log('takePhoto')
   // Access user's camera -> navigator isn't working right now - error is thrown that navigator cannot be accessed
-  navigator.mediaDevices.getUserMedia({ video: true })
-    .then((stream) => {
-      const video = document.createElement('video') //do we need to create a new element or can we access an existing one?
-      video.srcObject = stream
-      video.play()
+  // navigator.mediaDevices.getUserMedia({ video: true })
+  //   .then((stream) => {
+  //     const video = document.createElement('video') //do we need to create a new element or can we access an existing one?
+  //     video.srcObject = stream
+  //     video.play()
 
-      // Create canvas to take photo
-      const canvas = document.createElement('canvas') 
-      canvas.width = video.videoWidth
-      canvas.height = video.videoHeight
+  //     // Create canvas to take photo
+  //     const canvas = document.createElement('canvas') 
+  //     canvas.width = video.videoWidth
+  //     canvas.height = video.videoHeight
 
-      // Draw video frame on canvas
-      const context = canvas.getContext('2d')
-      context.drawImage(video, 0, 0, canvas.width, canvas.height)
+  //     // Draw video frame on canvas
+  //     const context = canvas.getContext('2d')
+  //     context.drawImage(video, 0, 0, canvas.width, canvas.height)
 
-      // Get photo as data URL
-      const dataUrl = canvas.toDataURL('')
+  //     // Get photo as data URL
+  //     const dataUrl = canvas.toDataURL('')
 
-      // Do something with the photo dataUrl
-      console.log(dataUrl)
+  //     // Do something with the photo dataUrl
+  //     console.log(dataUrl)
 
-      // Stop video stream
-      stream.getTracks().forEach((track) => {
-        track.stop()
-      })
-    })
-    .catch((err) => {
-      console.error(err)
-    })
+  //     // Stop video stream
+  //     stream.getTracks().forEach((track) => {
+  //       track.stop()
+  //     })
+  //   })
+  //   .catch((err) => {
+  //     console.error(err)
+  //   })
 };
 
 

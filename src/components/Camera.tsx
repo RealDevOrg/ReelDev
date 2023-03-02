@@ -1,26 +1,57 @@
-//window that opens the screenshot and camera -> send photo files to create Post element?
-//take over current window vs create new window - which is easier? 
-// import { desktopCapturer } from 'electron';
-// const { desktopCapturer } = require('electron');
-// // const Menu = remote();
-// import React, { useState, useRef } from "react";
 import {
   Button
 } from '@mui/material';
-// import "./App.scss";
 import { useNavigate } from 'react-router-dom';
-// import fs from 'fs'
+import { useEffect } from 'react';
 
 const Camera = () => {
+  useEffect(()=> {
+    navigator.mediaDevices
+    .getUserMedia({ video: true})
+    .then((stream) => {
+      const video = document.getElementById('preview');
+      video.srcObject = stream;
+      video.play();
+      })
+      .catch((err) => {
+        console.log('ERRORRR!!!!')
+        console.log(err);
+      });
+  }), [];
+
     const navigate = useNavigate();
     const takeMeHome = () => {
         navigate('/');
     }
+
+    // const width = video.width; // We will scale the photo width to this
+    // const height = video.height
+    
     const snap = (e) => {
-        console.log('snap function is fired');
-        window.electronAPI.takePhoto();
-        window.electronAPI.takeScreenshot();
+      const video = document.getElementById('preview');
+      console.log('snap function is fired');
+      //take screenshot
+      window.electronAPI.takeScreenshot();
+      //take photo
+      // Create canvas to take photo
+      const canvas = document.getElementById('canvas') 
+      //  canvas.width = video.videoWidth
+      //  canvas.height = video.videoHeight
+      const context = canvas.getContext("2d");
+      // if (width && height) {
+      canvas.width = video.width;
+      canvas.height = video.height;
+      context.drawImage(video, 0, 0, width, height);
+
+      const photo = document.getElementById('photo-image')
+      const data = canvas.toDataURL();
+      photo.setAttribute("src", data);
+      // } 
+    // else {
+        // clearphoto();
+      // }
     }
+    
     const send = () => {
       console.log('send function invoked')
     }
@@ -31,8 +62,9 @@ const Camera = () => {
         <div className="screenshot" style={{display: 'flex', width: '500px', }}>
             <img id='screenshot-image' src=''></img>
         </div>
-        <div className="photo" style={{display: 'flex', width: '500px', }}>
-            <video id='preview' src=''></video>
+        <div className="photo" id="photo" style={{display: 'flex', width: '500px', }}>
+            <video width="400" height="300" id='preview' src=''></video>
+            <canvas id="canvas" style={{display: 'none'}}> </canvas>
             <img id='photo-image' src=''></img>
         </div>
         <br/>
