@@ -18,6 +18,7 @@ import Post from './Post';
 
 const Feed = () => {
   const [feed, setFeed] = useState([]);
+  console.log('feed: ', feed);
   useEffect(() => {
     const getFeed = async () => {
       try {
@@ -30,7 +31,7 @@ const Feed = () => {
       }
     }
     getFeed();
-  }, []);
+  }, [feed.length]);
     
   const navigate = useNavigate();
 
@@ -45,7 +46,6 @@ const Feed = () => {
     <div className='container'>
       <Button variant='outlined' onClick={() => takeMeHome()}>Go To Landing Page</Button>
       <h2>Feed Here!</h2>
-      <Post />
       {feed.map(post => {
         const { username, caption, userimage, screenimage, timestamp, _id } = post; 
         return <Post username={username} caption={caption} userimage={userimage} screenimage={screenimage} timestamp={timestamp} id={_id}/>

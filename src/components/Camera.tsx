@@ -2,9 +2,11 @@ import {
   Button
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const Camera = () => {
+
+  // const [screenimage, screenimageSetter] = useState(''); 
   useEffect(()=> {
     navigator.mediaDevices
     .getUserMedia({ video: true})
@@ -53,8 +55,26 @@ const Camera = () => {
     }
     
     const send = () => {
-      console.log('send function invoked')
+      const screenshot = document.getElementById('screenshot-image')
+      const longString = screenshot.src;
+      fetch('http://localhost:3030/post', {
+        method: 'POST',
+        headers: { 
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
+        body: JSON.stringify({
+          caption: '', 
+          userimage: '',
+          screenimage: longString,
+        })
+      })
+        .then(yes => {
+          navigate('/feed')
+        })
+        .catch(no => console.log("NO!"));
     }
+
   return (
     <div className="Camera">
         <Button id='test' variant='outlined' onClick={()=>takeMeHome()}>Take me home</Button>

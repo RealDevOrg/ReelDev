@@ -32,7 +32,7 @@ const feedController = {
     try {
       const result = (await db.query(getAllPostsWithUsername)).rows;
       // res.locals.feed = result;
-      console.log("result from database ", result);
+      // console.log("result from database ", result);
       res.locals.feed = result;
       
       return next();
@@ -49,16 +49,16 @@ const feedController = {
     // body will have userImage, screenImage, username, userid, caption
     // insert into posts 
     try {
-      const { SSID } = req.cookies;
-      if (!SSID) throw new Error("ERROR! you don't have a cookie!");
-      const {userImage, screenImage, caption} = req.body;
+      // const { SSID } = req.cookies;
+      // if (!SSID) throw new Error("ERROR! you don't have a cookie!");
+      const {userimage, screenimage, caption} = req.body;
       // can be auto generated from db
       // const timestamp = Date.now();
       const addPostToDB = `
-        INSERT INTO posts (userImage, screenImage, caption, _userID) 
+        INSERT INTO posts (userimage, screenimage, caption, _userID) 
         VALUES($1, $2, $3, $4);
       `;
-      const values = [userImage, screenImage, caption, SSID];
+      const values = [userimage, screenimage, caption, 1];
       await db.query(addPostToDB, values);
       return next();
     } catch (err) {

@@ -35,19 +35,19 @@ const loginPage = () => {
   const goToSignUp = () => {
     navigate('/signup')
   }
-  // lillian
-  const verifyUser = (event) => {
-    console.log('verifyUser');
-    axios.post('user/login', {
-      username: username.value, 
-      password: password.value 
-    })
-      .then(res => {
-        console.log(data);
-        setLoggedIn(true);
-      })
-      .catch(error => console.log('Error : ', error.toJSON())); 
-  };
+  // // lillian
+  // const verifyUser = (event) => {
+  //   console.log('verifyUser');
+  //   axios.post('user/login', {
+  //     username: username.value, 
+  //     password: password.value 
+  //   })
+  //     .then(res => {
+  //       console.log(data);
+  //       setLoggedIn(true);
+  //     })
+  //     .catch(error => console.log('Error : ', error.toJSON())); 
+  // };
 
 
   return (
