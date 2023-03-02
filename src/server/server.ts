@@ -1,16 +1,24 @@
 import express from 'express';
+const cors = require('cors');
 import { Request, Response, NextFunction,  } from 'express';
 const cookieParser = require('cookie-parser');
 
 const app = express();
 
 // declare port Number
-const PORT = 3000;
+const PORT = 3030;
 
+const corsOptions = {
+  origin: '*',
+  credentials: true,
+  optionSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(express.json({limit:'50mb'}));
 app.use(cookieParser());
 
-app.use('/images', express.static('src/server/database/cdn'));
+app.use('/images', express.static('src/assets'));
 
 
 //

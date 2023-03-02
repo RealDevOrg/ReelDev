@@ -22,6 +22,8 @@ const SignUp = () => {
     })
     console.log('username :', username);
 
+    const takeMeHome = () => navigate('/')
+
     // const onClick = formData => {
     //    //user/signup (username, password)
     //    const { username, password } = formData;
@@ -44,25 +46,40 @@ const SignUp = () => {
     //    })
     
     // }
-    const onClick = () => {
-        navigate('/feed')
+    const onClick = async () => {
+        try {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            console.log(username, password);
+            await fetch('http://localhost:3030/user/signup', {
+              method: 'POST',
+              headers: { 
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+              },
+              body: JSON.stringify({ username: username, password: password })
+            })
+            navigate('/feed');
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     return (
         <div className='container'>
         <h1>Howdy, create your profile!</h1>
         <form>
-            <TextField type="text"placeholder="Username"
+            <TextField id='username' type="text"placeholder="Username"
             name="username" value={username} onChange={event => onChange(event)}>
             </TextField>
-            <TextField type="text"placeholder="Password"
+            <TextField id='password' type="text"placeholder="Password"
             name="password" value={password} onChange={event => onChange(event)}>
             </TextField>
             <br/>
             <Button variant='contained' type='submit' className='bttn' onClick={() => onClick()} >Create!</Button>
         </form>
         <br/>
-        <Button variant='outlined' className='bttn' onClick={()=>takeMeHome()}>Go to login page</Button>
+        <Button variant='outlined' className='bttn' onClick={()=> takeMeHome()}>Go to login page</Button>
     </div>
     )
 }

@@ -5,14 +5,17 @@ import {
   } from '@mui/material';
 // import dragonite from '../assets/dragonite.png';
 
-const Post = () => {
-    
+const Post = ({username, caption, userimage, screenimage, timestamp, id}) => {
+    if (!screenimage.startsWith('data:image/jpeg;base64, ')) {
+      screenimage = `data:image/jpeg;base64, ${screenimage}`
+    }
     return (
         <div className="Post" style={{color: "hotPink", backgroundColor: "lightCyan"}}>
-        {/* <img src={dragonite} alt="Dragonite"> </img> */}
-        <h4>💖!Example Post!💖</h4>
-        <h4>username = katie</h4>
-        <h4>caption = working hard or hardly working amiright? lol! </h4>
+        <img style={{height: '450px', width: 'auto'}} src={screenimage} alt="Dragonite"></img>
+        {/* <h4>💖!Example Post!💖</h4> */}
+        <h4>{username}</h4>
+        <h4>{caption}</h4>
+        <h4>{timestamp}</h4>
         <Button variant='outlined' id='viewComment' >Comments</Button>
   </div>
     )

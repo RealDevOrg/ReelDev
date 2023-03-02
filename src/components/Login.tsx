@@ -11,36 +11,62 @@ import {
 const loginPage = () => {
   // const [loggedIn, setLoggedIn] = useState(false); // lillian
   const navigate = useNavigate();
-
-  const goToFeed = () => {
-    navigate('/feed')
+  const [loggedIn, setLoggedIn] = useState();
+  
+  const login = async () => {
+    try {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      console.log(username, password);
+      await fetch('http://localhost:3030/user/signin', {
+        method: 'POST',
+        headers: { 
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
+        body: JSON.stringify({ username, password }) 
+      })
+      navigate('/feed');
+    } catch (e) {
+      console.log('error: ', e);
+      // alert('Incorrect user information.');
+    }
   }
   const goToSignUp = () => {
     navigate('/signup')
   }
   // lillian
-  // const verifyUser = (event) => {
-  //   console.log('verifyUser');
-  //   axios.post('user/login', {
-  //     username: username.value, 
-  //     password: password.value 
-  //   })
-  //     .then(res => {
-  //       console.log(data);
-  //       setLoggedIn(true);
-  //     })
-  //     .catch(error => console.log('Error : ', error.toJSON())); 
-  // };
+  const verifyUser = (event) => {
+    console.log('verifyUser');
+    axios.post('user/login', {
+      username: username.value, 
+      password: password.value 
+    })
+      .then(res => {
+        console.log(data);
+        setLoggedIn(true);
+      })
+      .catch(error => console.log('Error : ', error.toJSON())); 
+  };
 
 
   return (
     <div className='container'>
       <h2>Let's log you in cutie 😉</h2>
       <form>
-        <TextField type='text' placeholder='Username' name='username'/>
-        <TextField type='text' placeholder='Password' name='password'/> 
+        <TextField type='text' id='username' placeholder='Username' name='username'/>
+        <TextField type='text' id='password' placeholder='Password' name='password'/> 
         <br/>
-        <Button variant='outlined' type='submit' className='loginBttn' onClick={() => goToFeed()}>
+        <Button 
+          variant='outlined' 
+          type='submit' 
+          className='loginBttn' 
+          onClick={(e) => {
+            // send post to server
+            // await a response before going forward
+            e.preventDefault();
+            login();
+            }}>
           Login
         </Button>
       </form>
