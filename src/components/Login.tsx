@@ -55,7 +55,7 @@ const loginPage = () => {
       <h2>Let's log you in cutie 😉</h2>
       <form>
         <TextField type='text' id='username' placeholder='Username' name='username'/>
-        <TextField type='text' id='password' placeholder='Password' name='password'/> 
+        <TextField type='password' id='password' placeholder='Password' name='password'/> 
         <br/>
         <Button 
           variant='outlined' 

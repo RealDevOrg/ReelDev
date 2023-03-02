@@ -6,7 +6,7 @@ import {
 // import dragonite from '../assets/dragonite.png';
 
 const Post = ({username, caption, userimage, screenimage, timestamp, id}) => {
-    if (!screenimage.startsWith('data:image/jpeg;base64, ')) {
+    if (screenimage && !screenimage.startsWith('data:image/jpeg;base64, ')) {
       screenimage = `data:image/jpeg;base64, ${screenimage}`
     }
     return (
