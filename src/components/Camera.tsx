@@ -53,7 +53,7 @@ const Camera = () => {
     }
     
     const send = () => {
-      console.log('send function invoked')
+      navigate('/feed');
     }
   return (
     <div className="Camera">
